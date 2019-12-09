@@ -37,9 +37,15 @@ class DataBase extends Disposable{
     await box.put(produto.nome, produto.toJson());
   }
 
-  remove(String chave) async {
+  remove(Produto produto) async {
     final box = await completer.future;
+    String chave = produto.nome;
     await box.delete(chave);
+  }
+
+  clearAll() async {
+    final box = await completer.future;
+    await box.clear();
   }
 
   @override

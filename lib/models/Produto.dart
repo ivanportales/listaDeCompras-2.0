@@ -5,7 +5,7 @@ class Produto{
   int quantidade;
   bool comprado;
 
-  Produto({this.nome,this.preco,this.quantidade,this.comprado = false});
+  Produto({this.nome,this.preco = 0.0,this.quantidade,this.comprado = false});
 
   toJson(){
     return {
@@ -23,5 +23,9 @@ class Produto{
       quantidade: json['quantidade'],
       comprado: json['comprado']
     );
+  }
+
+  double getTotal(){
+    return this.quantidade * this.preco;
   }
 }

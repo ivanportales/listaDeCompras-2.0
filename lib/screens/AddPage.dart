@@ -13,7 +13,6 @@ class _AddPageState extends State<AddPage> {
   var bloc = BlocProvider.getBloc<ProdutoListBloc>();
 
   TextEditingController produtoController = TextEditingController();
-  TextEditingController precoController = TextEditingController();
   TextEditingController quantidadeController = TextEditingController();
 
   _formField(text,controll,icon,type){
@@ -25,6 +24,7 @@ class _AddPageState extends State<AddPage> {
       ),
       controller: controll,
       keyboardType: type,
+      
     );
   }
 
@@ -39,8 +39,17 @@ class _AddPageState extends State<AddPage> {
         padding: EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
-            _formField("Nome",produtoController,Icon(Icons.create),TextInputType.text),
-            _formField("Preço",precoController,Icon(Icons.attach_money),TextInputType.number),
+            TextFormField(
+              decoration: InputDecoration(
+                icon: Icon(Icons.create),
+                border: UnderlineInputBorder(),
+                
+                hintText: "Nome",
+              ),
+              controller: produtoController,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.sentences,
+            ),
             _formField("Quantidade",quantidadeController,Icon(Icons.plus_one),TextInputType.number),
           ],
         ),
@@ -49,10 +58,10 @@ class _AddPageState extends State<AddPage> {
         child: Icon(Icons.add),
         onPressed: (){
           var nome = produtoController.text;
-          var preco = double.parse(precoController.text);
           var quantidade = int.parse(quantidadeController.text);
           
-          bloc.addProduto(Produto(nome: nome,preco: preco,quantidade: quantidade));
+          bloc.addProduto(Produto(nome: nome,quantidade: quantidade));
+          Navigator.pop(context);
         },
       ),
     );

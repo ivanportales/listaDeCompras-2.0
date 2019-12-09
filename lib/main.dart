@@ -3,6 +3,8 @@ import 'package:listadecompras/blocs/ProdutoListBloc.dart';
 import 'package:listadecompras/screens/HomePage.dart';
 import 'package:flutter/material.dart';
 
+import 'blocs/TotalBloc.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget{
@@ -10,10 +12,15 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return BlocProvider(
       blocs: [
-        Bloc((i) => ProdutoListBloc())
+        Bloc((i) => TotalBloc()),
+        Bloc((i) => ProdutoListBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          accentColor: Colors.redAccent
+        ),
         home: HomePage(),
       ),
     );
