@@ -1,7 +1,7 @@
-import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:listadecompras/blocs/ProdutoListBloc.dart';
+import 'package:listadecompras/blocs/BlocProdutoList.dart';
 import 'package:listadecompras/models/Produto.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddPage extends StatefulWidget {
   @override
@@ -10,10 +10,9 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> {
   
-  var bloc = BlocProvider.getBloc<ProdutoListBloc>();
-
   TextEditingController produtoController = TextEditingController();
   TextEditingController quantidadeController = TextEditingController();
+  BlocProdutoList listBloc;
 
   _formField(text,controll,icon,type){
     return TextFormField(
@@ -24,12 +23,14 @@ class _AddPageState extends State<AddPage> {
       ),
       controller: controll,
       keyboardType: type,
-      
     );
   }
 
   @override
   Widget build(BuildContext context) {
+
+    listBloc = Provider.of<BlocProdutoList>(context);
+
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.add_shopping_cart),
@@ -43,7 +44,6 @@ class _AddPageState extends State<AddPage> {
               decoration: InputDecoration(
                 icon: Icon(Icons.create),
                 border: UnderlineInputBorder(),
-                
                 hintText: "Nome",
               ),
               controller: produtoController,
@@ -58,9 +58,9 @@ class _AddPageState extends State<AddPage> {
         child: Icon(Icons.add),
         onPressed: (){
           var nome = produtoController.text;
+          print("nome aqui ${nome}");
           var quantidade = int.parse(quantidadeController.text);
-          
-          bloc.addProduto(Produto(nome: nome,quantidade: quantidade));
+          listBloc.add(Produto(nome: nome,quantidade: quantidade));
           Navigator.pop(context);
         },
       ),
