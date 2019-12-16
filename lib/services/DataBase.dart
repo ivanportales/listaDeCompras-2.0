@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:listadecompras/models/Produto.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
-class DataBase extends Disposable{
+class DataBase {
 
   Completer<Box> completer = Completer<Box>();
 
@@ -27,30 +26,23 @@ class DataBase extends Disposable{
 
   add(Produto produto) async {
     final box = await completer.future;
-    produto.id = box.values.length;
-    await box.put(produto.nome, produto.toJson());
+    produto.id = produto.hashCode;
+    await box.put(produto.hashCode,produto.toJson());
     return produto;
   }
 
   update(Produto produto) async {
     final box = await completer.future;
-    await box.put(produto.nome, produto.toJson());
+    await box.put(produto.id, produto.toJson());
   }
 
   remove(Produto produto) async {
     final box = await completer.future;
-    String chave = produto.nome;
-    await box.delete(chave);
+    await box.delete(produto.id);
   }
 
   clearAll() async {
     final box = await completer.future;
     await box.clear();
-  }
-
-  @override
-  void dispose() async{
-    var box = await completer.future;
-    box.close();
   }
 }

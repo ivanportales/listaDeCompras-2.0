@@ -5,10 +5,11 @@ class Produto{
   int quantidade;
   bool comprado;
 
-  Produto({this.nome,this.preco = 0.0,this.quantidade,this.comprado = false});
+  Produto({this.id=0,this.nome,this.preco = 0.0,this.quantidade,this.comprado = false});
 
   toJson(){
     return {
+      'id' : this.id,
       'nome': this.nome,
       'preco': this.preco,
       'quantidade': this.quantidade,
@@ -18,6 +19,7 @@ class Produto{
 
   factory Produto.fromJson(Map<dynamic,dynamic>  json){
     return Produto(
+      id: json['id'],
       nome: json['nome'],
       preco: json['preco'],
       quantidade: json['quantidade'],
