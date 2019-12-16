@@ -4,14 +4,14 @@ import 'package:listadecompras/services/DataBase.dart';
 
 class BlocProdutoList extends ChangeNotifier{
 
-  List<Produto> produtos = [];
+  List<Produto> _produtos = [];
   double _total = 0.0;
   DataBase _database;
 
   BlocProdutoList(){
     _database = DataBase();
     _database.getAll().then((value){
-      produtos = value;
+      _produtos = value;
       value.forEach((item){
         if(item.comprado){
           _total += item.quantidade * item.preco;
@@ -22,26 +22,27 @@ class BlocProdutoList extends ChangeNotifier{
   }
 
   add(Produto produto){
-    produtos.add(produto);
+    _produtos.add(produto);
     _database.add(produto);
     notifyListeners();
   }
 
   remove(Produto produto){
-    produtos.remove(produto);
+    _produtos.remove(produto);
     _database.remove(produto);
     notifyListeners();
   }
 
   update(Produto produto,{int index = 0}){
-    int index = produtos.indexOf(produto);
-    produtos[index] = produto;
+    int index = _produtos.indexOf(produto);
+    _produtos[index] = produto;
     _database.update(produto);
     notifyListeners();
   }
 
   changeStatus(int index){
-    produtos[index].comprado = !produtos[index].comprado;
+    _produtos[index].comprado = !_produtos[index].comprado;
+    _database.update(_produtos[index]);
   }
 
   incrementTotal(double valor){
@@ -59,11 +60,15 @@ class BlocProdutoList extends ChangeNotifier{
   }
 
   getListLength(){
-    return produtos.length;
+    return _produtos.length;
+  }
+
+  getProduto(int index){
+    return _produtos[index];
   }
 
   clearAll(){
-    produtos.clear();
+    _produtos.clear();
     _database.clearAll();
     _eraseTotal();
   }

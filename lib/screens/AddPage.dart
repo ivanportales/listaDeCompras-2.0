@@ -12,24 +12,9 @@ class _AddPageState extends State<AddPage> {
   
   TextEditingController produtoController = TextEditingController();
   TextEditingController quantidadeController = TextEditingController();
-  BlocProdutoList listBloc;
-
-  _formField(text,controll,icon,type){
-    return TextFormField(
-      decoration: InputDecoration(
-        icon: icon,
-        border: UnderlineInputBorder(),
-        hintText: text,
-      ),
-      controller: controll,
-      keyboardType: type,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-
-    listBloc = Provider.of<BlocProdutoList>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +35,15 @@ class _AddPageState extends State<AddPage> {
               keyboardType: TextInputType.text,
               textCapitalization: TextCapitalization.sentences,
             ),
-            _formField("Quantidade",quantidadeController,Icon(Icons.plus_one),TextInputType.number),
+           TextFormField(
+            decoration: InputDecoration(
+              icon: Icon(Icons.plus_one),
+              border: UnderlineInputBorder(),
+              hintText: "Quantidade",
+            ),
+            controller: quantidadeController,
+            keyboardType: TextInputType.number,
+            )
           ],
         ),
       ),
@@ -58,9 +51,13 @@ class _AddPageState extends State<AddPage> {
         child: Icon(Icons.add),
         onPressed: (){
           var nome = produtoController.text;
-          print("nome aqui ${nome}");
           var quantidade = int.parse(quantidadeController.text);
-          listBloc.add(Produto(nome: nome,quantidade: quantidade));
+          
+          if(nome.isNotEmpty && quantidade > 0){
+            BlocProdutoList listBloc = Provider.of<BlocProdutoList>(context);
+            listBloc.add(Produto(nome: nome,quantidade: quantidade));
+          }
+
           Navigator.pop(context);
         },
       ),

@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
       padding: EdgeInsets.all(5),
       itemCount: listProdutos.getListLength(),
       itemBuilder: (context,index) =>
-        ProdutoListTile(produto: listProdutos.produtos[index], index: index)
+        ProdutoListTile(produto: listProdutos.getProduto(index), index: index)
       );
   }
 
@@ -29,7 +29,6 @@ class _HomePageState extends State<HomePage> {
     bloc = Provider.of<BlocProdutoList>(context);
 
     print("Rebuildando o HomePage");
-
 
     return Scaffold(
       appBar: AppBar(

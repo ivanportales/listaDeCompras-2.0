@@ -27,7 +27,7 @@ class DataBase {
   add(Produto produto) async {
     final box = await completer.future;
     produto.id = produto.hashCode;
-    await box.put(produto.hashCode,produto.toJson());
+    await box.put(produto.id,produto.toJson());
     return produto;
   }
 
