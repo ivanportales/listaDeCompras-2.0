@@ -42,7 +42,7 @@ class ProdutoListTile extends StatelessWidget {
             barrierDismissible: false,
             context: context,
             builder: (_){
-              BlocTileDialog dialogBloc = BlocTileDialog(quantidade_cache:produto.quantidade,preco_cache: produto.preco);
+              BlocTileDialog dialogBloc = BlocTileDialog(quantidadeCache:produto.quantidade,precoCache: produto.preco);
               dialogBloc.updateTotal(produto.getTotal());
               return AlertDialog(
                 title: Text("Produto: ${produto.nome}"),
@@ -59,7 +59,7 @@ class ProdutoListTile extends StatelessWidget {
                       controller: dialogBloc.quantidadeController,
                       onChanged: (value){
                         if(value.isEmpty){
-                          produto.quantidade = dialogBloc.quantidade_cache;
+                          produto.quantidade = dialogBloc.quantidadeCache;
                         }else{
                           produto.quantidade = int.parse(value);
                         }
@@ -76,7 +76,7 @@ class ProdutoListTile extends StatelessWidget {
                       controller: dialogBloc.precoController,
                       onChanged: (value){
                         if(value.isEmpty){
-                          produto.preco = dialogBloc.preco_cache;
+                          produto.preco = dialogBloc.precoCache;
                         }else{
                           produto.preco = double.parse(value);
                         }
@@ -93,8 +93,8 @@ class ProdutoListTile extends StatelessWidget {
                   FlatButton(
                     child: Text("Cancelar"),
                     onPressed: (){
-                      produto.quantidade = dialogBloc.quantidade_cache;
-                      produto.preco = dialogBloc.preco_cache;
+                      produto.quantidade = dialogBloc.quantidadeCache;
+                      produto.preco = dialogBloc.precoCache;
                       Navigator.pop(context);
                     },
                   ),
@@ -106,8 +106,8 @@ class ProdutoListTile extends StatelessWidget {
                           produtos.update(produto);
                           produtos.incrementTotal(produto.getTotal());
                         }else{
-                          produto.quantidade = dialogBloc.quantidade_cache;
-                          produto.preco = dialogBloc.preco_cache;
+                          produto.quantidade = dialogBloc.quantidadeCache;
+                          produto.preco = dialogBloc.precoCache;
                         }
                         Navigator.pop(context);
                       },
@@ -118,11 +118,12 @@ class ProdutoListTile extends StatelessWidget {
             );
           },
         ),
-        onLongPress: (){
-          produtos.remove(produto);
-          if(produto.comprado){
-            produtos.decrementTotal(produto.getTotal());
-          }
-        },
-      ); }
+      onLongPress: (){
+        produtos.remove(produto);
+        if(produto.comprado){
+          produtos.decrementTotal(produto.getTotal());
+        }
+      },
+    ); 
+  }
 }

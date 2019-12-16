@@ -27,7 +27,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     bloc = Provider.of<BlocProdutoList>(context);
+
     print("Rebuildando o HomePage");
+
+
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.assignment),

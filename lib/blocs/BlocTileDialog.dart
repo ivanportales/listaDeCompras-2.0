@@ -7,10 +7,10 @@ class BlocTileDialog extends ChangeNotifier{
   TextEditingController quantidadeController = TextEditingController();
 
   double total = 0.0;
-  int quantidade_cache = 0;
-  double preco_cache = 0.0;
+  int quantidadeCache = 0;
+  double precoCache = 0.0;
 
-  BlocTileDialog({this.quantidade_cache, this.preco_cache});
+  BlocTileDialog({this.quantidadeCache, this.precoCache});
 
   updateTotal(double total){
     this.total = total;

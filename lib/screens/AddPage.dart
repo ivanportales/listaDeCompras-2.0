@@ -58,6 +58,7 @@ class _AddPageState extends State<AddPage> {
         child: Icon(Icons.add),
         onPressed: (){
           var nome = produtoController.text;
+          print("nome aqui ${nome}");
           var quantidade = int.parse(quantidadeController.text);
           listBloc.add(Produto(nome: nome,quantidade: quantidade));
           Navigator.pop(context);
