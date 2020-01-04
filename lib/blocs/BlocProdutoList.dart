@@ -1,79 +1,78 @@
 import 'package:flutter/material.dart';
-import 'package:listadecompras/models/Produto.dart';
-import 'package:listadecompras/services/DataBase.dart';
+import 'package:listadecompras2_5/models/Produto.dart';
+import 'package:listadecompras2_5/services/DataBase.dart';
 
-class BlocProdutoList extends ChangeNotifier{
-
+class BlocProdutoList extends ChangeNotifier {
   List<Produto> _produtos = [];
   double _total = 0.0;
   DataBase _database;
 
-  BlocProdutoList(){
+  BlocProdutoList() {
     _database = DataBase();
-    _database.getAll().then((value){
+    _database.getAll().then((value) {
       _produtos = value;
-      value.forEach((item){
-        if(item.comprado){
-          _total += item.quantidade * item.preco;
+      value.forEach((item) {
+        if (item.comprado) {
+          _total += item.getTotal();
         }
       });
       notifyListeners();
     });
   }
 
-  add(Produto produto){
+  add(Produto produto) {
     _produtos.add(produto);
     _database.add(produto);
     notifyListeners();
   }
 
-  remove(Produto produto){
+  remove(Produto produto) {
     _produtos.remove(produto);
     _database.remove(produto);
     notifyListeners();
   }
 
-  update(Produto produto,{int index = 0}){
+  update(Produto produto, {int index = 0}) {
     int index = _produtos.indexOf(produto);
     _produtos[index] = produto;
     _database.update(produto);
     notifyListeners();
   }
 
-  changeStatus(int index){
+  changeStatus(int index) {
     _produtos[index].comprado = !_produtos[index].comprado;
     _database.update(_produtos[index]);
   }
 
-  incrementTotal(double valor){
+  incrementTotal(double valor) {
     _total += valor;
     notifyListeners();
   }
 
-  decrementTotal(double valor){
+  decrementTotal(double valor) {
     _total -= valor;
     notifyListeners();
   }
 
-  getTotal(){
+  getTotal() {
     return _total;
   }
 
-  getListLength(){
+  getListLength() {
     return _produtos.length;
   }
 
-  getProduto(int index){
+  getProduto(int index) {
     return _produtos[index];
   }
 
-  clearAll(){
+  clearAll() {
     _produtos.clear();
     _database.clearAll();
     _eraseTotal();
   }
 
-  _eraseTotal(){
+  _eraseTotal() {
     _total = 0;
     notifyListeners();
   }

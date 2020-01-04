@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:listadecompras/models/Produto.dart';
+import 'package:listadecompras2_5/models/Produto.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 

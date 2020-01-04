@@ -1,21 +1,24 @@
-import 'package:listadecompras/blocs/BlocProdutoList.dart';
-import 'package:listadecompras/models/Produto.dart';
+import 'package:listadecompras2_5/controllers/ProdutosController.dart';
+import 'package:listadecompras2_5/models/Produto.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AddPage extends StatefulWidget {
+  ProdutosController controller;
+  AddPage({this.controller});
+
   @override
-  _AddPageState createState() => _AddPageState();
+  _AddPageState createState() => _AddPageState(controller: controller);
 }
 
 class _AddPageState extends State<AddPage> {
-  
   TextEditingController produtoController = TextEditingController();
   TextEditingController quantidadeController = TextEditingController();
 
+  ProdutosController controller;
+  _AddPageState({this.controller});
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.add_shopping_cart),
@@ -35,27 +38,26 @@ class _AddPageState extends State<AddPage> {
               keyboardType: TextInputType.text,
               textCapitalization: TextCapitalization.sentences,
             ),
-           TextFormField(
-            decoration: InputDecoration(
-              icon: Icon(Icons.plus_one),
-              border: UnderlineInputBorder(),
-              hintText: "Quantidade",
-            ),
-            controller: quantidadeController,
-            keyboardType: TextInputType.number,
+            TextFormField(
+              decoration: InputDecoration(
+                icon: Icon(Icons.plus_one),
+                border: UnderlineInputBorder(),
+                hintText: "Quantidade",
+              ),
+              controller: quantidadeController,
+              keyboardType: TextInputType.number,
             )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: (){
+        onPressed: () {
           var nome = produtoController.text;
           var quantidade = int.parse(quantidadeController.text);
-          
-          if(nome.isNotEmpty && quantidade > 0){
-            BlocProdutoList listBloc = Provider.of<BlocProdutoList>(context);
-            listBloc.add(Produto(nome: nome,quantidade: quantidade));
+
+          if (nome.isNotEmpty && quantidade > 0) {
+            controller.add(Produto(nome: nome, quantidade: quantidade));
           }
 
           Navigator.pop(context);
