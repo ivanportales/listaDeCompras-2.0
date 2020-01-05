@@ -8,13 +8,13 @@ class Produto extends _Produto with _$Produto {
       String nome,
       double preco = 0.0,
       int quantidade,
-      bool comprado = false})
+      bool comprado})
       : super(
             id: id,
             nome: nome,
             preco: preco = 0.0,
             quantidade: quantidade,
-            comprado: comprado = false);
+            comprado: comprado);
 
   toJson() {
     return {
@@ -54,5 +54,5 @@ abstract class _Produto with Store {
       this.nome,
       this.preco = 0.0,
       this.quantidade,
-      this.comprado = false});
+      this.comprado});
 }

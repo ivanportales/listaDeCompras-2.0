@@ -68,16 +68,6 @@ mixin _$ProdutosController on _ProdutosController, Store {
       ActionController(name: '_ProdutosController');
 
   @override
-  dynamic update(Produto produto) {
-    final _$actionInfo = _$_ProdutosControllerActionController.startAction();
-    try {
-      return super.update(produto);
-    } finally {
-      _$_ProdutosControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic incrementTotal(double val) {
     final _$actionInfo = _$_ProdutosControllerActionController.startAction();
     try {

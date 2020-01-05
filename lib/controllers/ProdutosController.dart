@@ -48,11 +48,10 @@ abstract class _ProdutosController with Store {
     produtos.remove(produto);
   }
 
-  @action
-  update(Produto produto) {
-    int index = produtos.indexOf(produto);
-    produtos[index] = produto;
-    dataBase.update(produto);
+  update(Produto produto) async {
+    /*int index = produtos.indexOf(produto);
+    produtos[index] = produto;*/
+    await dataBase.update(produto);
   }
 
   @action
@@ -71,3 +70,5 @@ abstract class _ProdutosController with Store {
     total -= val;
   }
 }
+
+// flutter pub run build_runner build
