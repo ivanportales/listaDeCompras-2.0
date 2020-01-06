@@ -3,16 +3,11 @@ import 'package:mobx/mobx.dart';
 part 'Produto.g.dart';
 
 class Produto extends _Produto with _$Produto {
-  Produto(
-      {int id = 0,
-      String nome,
-      double preco = 0.0,
-      int quantidade,
-      bool comprado})
+  Produto({int id, String nome, double preco, int quantidade, bool comprado})
       : super(
             id: id,
             nome: nome,
-            preco: preco = 0.0,
+            preco: preco,
             quantidade: quantidade,
             comprado: comprado);
 
