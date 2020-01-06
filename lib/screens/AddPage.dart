@@ -57,8 +57,8 @@ class _AddPageState extends State<AddPage> {
           var quantidade = int.parse(quantidadeController.text);
 
           if (nome.isNotEmpty && quantidade > 0) {
-            controller.add(
-                Produto(nome: nome, quantidade: quantidade, comprado: false));
+            controller.add(Produto(
+                nome: nome, quantidade: quantidade, preco: 0, comprado: false));
           }
           Navigator.pop(context);
         },

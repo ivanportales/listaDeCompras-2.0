@@ -45,9 +45,9 @@ abstract class _Produto with Store {
   bool comprado;
 
   _Produto(
-      {this.id = 0,
+      {this.id,
       this.nome,
-      this.preco = 0.0,
+      this.preco,
       this.quantidade,
       this.comprado});
 }
