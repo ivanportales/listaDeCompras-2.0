@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:listadecompras2_5/controllers/ProdutoDialogController.dart';
 import 'package:listadecompras2_5/controllers/ProdutosController.dart';
 import 'package:listadecompras2_5/models/Produto.dart';
 
@@ -44,15 +45,16 @@ class ProdutoListTile extends StatelessWidget {
           trailing: IconButton(
             icon: Icon(Icons.edit),
             onPressed: () {
-              /*
               showDialog(
                   barrierDismissible: false,
                   context: context,
                   builder: (_) {
-                    BlocTileDialog dialogBloc = BlocTileDialog(
-                        quantidadeCache: produto.quantidade,
-                        precoCache: produto.preco);
-                    dialogBloc.updateTotal(produto.getTotal());
+                    print("Rebuildando Dialog");
+                    ProdutoDialogController dialogController =
+                        ProdutoDialogController();
+                    dialogController.quantidadeCache = produto.quantidade;
+                    dialogController.precoCache = produto.preco;
+                    dialogController.updateTotal(produto.getTotal());
                     return AlertDialog(
                       title: Text("Produto: ${produto.nome}"),
                       content: Column(
@@ -65,14 +67,15 @@ class ProdutoListTile extends StatelessWidget {
                               hintText: "${produto.quantidade}",
                             ),
                             keyboardType: TextInputType.number,
-                            controller: dialogBloc.quantidadeController,
+                            controller: dialogController.quantidadeController,
                             onChanged: (value) {
                               if (value.isEmpty) {
-                                produto.quantidade = dialogBloc.quantidadeCache;
+                                produto.quantidade =
+                                    dialogController.quantidadeCache;
                               } else {
                                 produto.quantidade = int.parse(value);
                               }
-                              dialogBloc.updateTotal(produto.getTotal());
+                              dialogController.updateTotal(produto.getTotal());
                             },
                           ),
                           TextFormField(
@@ -82,20 +85,25 @@ class ProdutoListTile extends StatelessWidget {
                               hintText: "${produto.preco}",
                             ),
                             keyboardType: TextInputType.number,
-                            controller: dialogBloc.precoController,
+                            controller: dialogController.precoController,
                             onChanged: (value) {
                               if (value.isEmpty) {
-                                produto.preco = dialogBloc.precoCache;
+                                produto.preco = dialogController.precoCache;
                               } else {
                                 produto.preco = double.parse(value);
                               }
-                              dialogBloc.updateTotal(produto.getTotal());
+                              dialogController.updateTotal(produto.getTotal());
                             },
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8),
-                            child: Text("${dialogBloc.total.toString()}",
-                                textAlign: TextAlign.center),
+                          Observer(
+                            builder: (_) {
+                              print("Observer do total dialog");
+                              return Padding(
+                                padding: EdgeInsets.only(top: 8),
+                                child: Text("${dialogController.total}",
+                                    textAlign: TextAlign.center),
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -103,8 +111,9 @@ class ProdutoListTile extends StatelessWidget {
                         FlatButton(
                           child: Text("Cancelar"),
                           onPressed: () {
-                            produto.quantidade = dialogBloc.quantidadeCache;
-                            produto.preco = dialogBloc.precoCache;
+                            produto.quantidade =
+                                dialogController.quantidadeCache;
+                            produto.preco = dialogController.precoCache;
                             Navigator.pop(context);
                           },
                         ),
@@ -113,11 +122,12 @@ class ProdutoListTile extends StatelessWidget {
                           onPressed: () {
                             if (!produto.comprado) {
                               produto.comprado = true;
-                              produtos.update(produto);
-                              produtos.incrementTotal(produto.getTotal());
+                              controller.update(produto);
+                              controller.incrementTotal(produto.getTotal());
                             } else {
-                              produto.quantidade = dialogBloc.quantidadeCache;
-                              produto.preco = dialogBloc.precoCache;
+                              produto.quantidade =
+                                  dialogController.quantidadeCache;
+                              produto.preco = dialogController.precoCache;
                             }
                             Navigator.pop(context);
                           },
@@ -125,7 +135,6 @@ class ProdutoListTile extends StatelessWidget {
                       ],
                     );
                   });
-            */
             },
           ),
           onLongPress: () {
