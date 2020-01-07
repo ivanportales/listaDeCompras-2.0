@@ -2,6 +2,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:listadecompras2_5/controllers/ProdutosController.dart';
 import 'package:listadecompras2_5/screens/AddPage.dart';
 import 'package:flutter/material.dart';
+import 'package:listadecompras2_5/widgets/CustomAppBar.dart';
 import 'package:listadecompras2_5/widgets/ProdutoListTile.dart';
 
 class HomePage extends StatefulWidget {

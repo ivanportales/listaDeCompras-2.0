@@ -57,6 +57,7 @@ abstract class _ProdutosController with Store {
   @action
   clearAll() async {
     await dataBase.clearAll();
+    total = 0;
     produtos.clear();
   }
 

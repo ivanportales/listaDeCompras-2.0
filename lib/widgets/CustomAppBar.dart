@@ -1,42 +1,65 @@
-/*import 'package:flutter/material.dart';
-import 'package:listadecompras2_5/blocs/BlocProdutoList.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:listadecompras2_5/controllers/AppBarController.dart';
+import 'package:listadecompras2_5/controllers/ProdutosController.dart';
 
 class CustomAppBar extends StatelessWidget {
-  bool isSearching = false;
-  TextEditingController controller = TextEditingController();
+  ProdutosController produtosController;
+  TextEditingController textController = TextEditingController();
+
+  CustomAppBar({this.produtosController});
 
   @override
   Widget build(BuildContext context) {
-    BlocProdutoList bloc = Provider.of<BlocProdutoList>(context);
-    // n vai dar certo com o Provider, pensando em mudar, de novo, pra Bloc com Streams
-    return AppBar(
-      leading: Icon(Icons.assignment),
-      title: Consumer<BlocProdutoList>(
-        builder: (context, produtos, _) {
-          if (isSearching) {
-            return TextField(
-              controller: controller,
-            );
-          } else {
-            return Text("Total: ${produtos.getTotal()}");
-          }
-        },
-      ),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            isSearching = true;
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.delete),
-          onPressed: () {
-            bloc.clearAll();
-          },
-        ),
-      ],
-    );
+    AppBarController appBarController = AppBarController();
+
+    return Observer(builder: (_) {
+      if (!appBarController.isSearching) {
+        return AppBar(
+          leading: Icon(Icons.assignment),
+          title: Observer(
+            builder: (_) {
+              print("Rebuildando o Observer do total");
+              return Text("Total: ${produtosController.total}");
+            },
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                appBarController.changeStatus();
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                produtosController.clearAll();
+              },
+            ),
+          ],
+        );
+      } else {
+        return AppBar(
+          leading: Icon(Icons.assignment),
+          title: TextField(
+            controller: textController,
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                appBarController.changeStatus();
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                produtosController.clearAll();
+              },
+            ),
+          ],
+        );
+      }
+    });
   }
 }
-*/

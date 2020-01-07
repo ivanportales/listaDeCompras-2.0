@@ -26,7 +26,6 @@ class ProdutoListTile extends StatelessWidget {
             value: produto.comprado,
             onChanged: (isChecked) {
               produto.comprado = isChecked;
-              print(isChecked);
               controller.update(produto);
               if (isChecked) {
                 controller.incrementTotal(produto.getTotal());
