@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
         title: Observer(
           builder: (_) {
             print("Rebuildando o Observer do total");
-            return Text("Total: ${controller.total}");
+            return Text("Total: ${controller.total.toStringAsPrecision(2)}");
           },
         ),
         actions: <Widget>[
