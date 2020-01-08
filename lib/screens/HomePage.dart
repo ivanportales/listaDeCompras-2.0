@@ -3,7 +3,6 @@ import 'package:listadecompras2_5/controllers/AppBarController.dart';
 import 'package:listadecompras2_5/controllers/ProdutosController.dart';
 import 'package:listadecompras2_5/screens/AddPage.dart';
 import 'package:flutter/material.dart';
-import 'package:listadecompras2_5/widgets/CustomAppBar.dart';
 import 'package:listadecompras2_5/widgets/ProdutoListTile.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,6 +26,9 @@ class _HomePageState extends State<HomePage> {
             return appBarController.isSearching
                 ? TextField(
                     controller: appBarController.textController,
+                    onChanged: (value) {
+                      controller.search(value);
+                    },
                   )
                 : Text("Total: ${controller.total.toStringAsPrecision(2)}");
           },
@@ -37,6 +39,8 @@ class _HomePageState extends State<HomePage> {
                 ? IconButton(
                     icon: Icon(Icons.close),
                     onPressed: () {
+                      controller.resetList();
+                      appBarController.textController.text = '';
                       appBarController.isSearching =
                           !appBarController.isSearching;
                     },

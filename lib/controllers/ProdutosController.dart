@@ -13,6 +13,8 @@ abstract class _ProdutosController with Store {
   @observable
   double total = 0.0;
 
+  List<Produto> _produtos = List<Produto>();
+
   DataBase dataBase;
 
   _ProdutosController() {
@@ -24,6 +26,7 @@ abstract class _ProdutosController with Store {
     var tempList = await dataBase.getAll();
     total = _initTotal(tempList);
     produtos.addAll(tempList);
+    _produtos.addAll(tempList);
   }
 
   _initTotal(List<Produto> tempList) {
@@ -52,6 +55,24 @@ abstract class _ProdutosController with Store {
     /*int index = produtos.indexOf(produto);
     produtos[index] = produto;*/
     await dataBase.update(produto);
+  }
+
+  @action
+  search(String query) {
+    produtos.clear();
+    List<Produto> aux = List<Produto>();
+    _produtos.forEach((item) {
+      if (item.nome.toLowerCase().contains(query.toLowerCase())) {
+        aux.add(item);
+      }
+    });
+    produtos.addAll(aux);
+  }
+
+  @action
+  resetList() {
+    produtos.clear();
+    produtos.addAll(_produtos);
   }
 
   @action

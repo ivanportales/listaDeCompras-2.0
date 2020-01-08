@@ -95,12 +95,9 @@ class ProdutoListTile extends StatelessWidget {
                         Observer(
                           builder: (_) {
                             print("Observer do total dialog");
-                            return Padding(
-                              padding: EdgeInsets.only(top: 8),
-                              child: Text(
-                                  "${dialogController.total.toStringAsPrecision(2)}",
-                                  textAlign: TextAlign.center),
-                            );
+                            return Text(
+                                "${dialogController.total.toStringAsPrecision(2)}",
+                                textAlign: TextAlign.center);
                           },
                         ),
                       ],
