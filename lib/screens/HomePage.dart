@@ -1,4 +1,5 @@
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:listadecompras2_5/controllers/AppBarController.dart';
 import 'package:listadecompras2_5/controllers/ProdutosController.dart';
 import 'package:listadecompras2_5/screens/AddPage.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   ProdutosController controller = ProdutosController();
+  AppBarController appBarController = AppBarController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +23,32 @@ class _HomePageState extends State<HomePage> {
         leading: Icon(Icons.assignment),
         title: Observer(
           builder: (_) {
-            print("Rebuildando o Observer do total");
-            return Text("Total: ${controller.total.toStringAsPrecision(2)}");
+            print("Rebuildando o Observer do title");
+            return appBarController.isSearching
+                ? TextField(
+                    controller: appBarController.textController,
+                  )
+                : Text("Total: ${controller.total.toStringAsPrecision(2)}");
           },
         ),
         actions: <Widget>[
+          Observer(builder: (_) {
+            return appBarController.isSearching
+                ? IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      appBarController.isSearching =
+                          !appBarController.isSearching;
+                    },
+                  )
+                : IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      appBarController.isSearching =
+                          !appBarController.isSearching;
+                    },
+                  );
+          }),
           IconButton(
             icon: Icon(Icons.delete),
             onPressed: () {
