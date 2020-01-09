@@ -43,12 +43,14 @@ abstract class _ProdutosController with Store {
   add(Produto produto) async {
     await dataBase.add(produto);
     produtos.add(produto);
+    _produtos.add(produto);
   }
 
   @action
   remove(Produto produto) async {
     await dataBase.remove(produto);
     produtos.remove(produto);
+    _produtos.remove(produto);
   }
 
   update(Produto produto) async {
@@ -80,6 +82,7 @@ abstract class _ProdutosController with Store {
     await dataBase.clearAll();
     total = 0;
     produtos.clear();
+    _produtos.clear();
   }
 
   @action
