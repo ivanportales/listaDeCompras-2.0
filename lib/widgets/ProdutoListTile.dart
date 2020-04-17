@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:listadecompras2_5/controllers/ProdutoDialogController.dart';
 import 'package:listadecompras2_5/controllers/ProdutosController.dart';
 import 'package:listadecompras2_5/models/Produto.dart';
+import 'package:listadecompras2_5/widgets/CustomDialog.dart';
 
 class ProdutoListTile extends StatelessWidget {
   Produto produto;
@@ -43,92 +43,12 @@ class ProdutoListTile extends StatelessWidget {
                   : TextStyle()),
           onTap: () {
             showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (_) {
-                  print("Rebuildando Dialog");
-                  ProdutoDialogController dialogController =
-                      ProdutoDialogController();
-                  dialogController.quantidadeCache = produto.quantidade;
-                  dialogController.precoCache = produto.preco;
-                  dialogController.updateTotal(produto.getTotal());
-                  return AlertDialog(
-                    title: Text("Produto: ${produto.nome}"),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        TextFormField(
-                          decoration: InputDecoration(
-                            icon: Icon(Icons.plus_one),
-                            border: UnderlineInputBorder(),
-                            hintText: "${produto.quantidade}",
-                          ),
-                          keyboardType: TextInputType.number,
-                          controller: dialogController.quantidadeController,
-                          onChanged: (value) {
-                            if (value.isEmpty) {
-                              produto.quantidade =
-                                  dialogController.quantidadeCache;
-                            } else {
-                              produto.quantidade = int.parse(value);
-                            }
-                            dialogController.updateTotal(produto.getTotal());
-                          },
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            icon: Icon(Icons.monetization_on),
-                            border: UnderlineInputBorder(),
-                            hintText: "${produto.preco}",
-                          ),
-                          keyboardType: TextInputType.number,
-                          controller: dialogController.precoController,
-                          onChanged: (value) {
-                            if (value.isEmpty) {
-                              produto.preco = dialogController.precoCache;
-                            } else {
-                              produto.preco = double.parse(value);
-                            }
-                            dialogController.updateTotal(produto.getTotal());
-                          },
-                        ),
-                        Observer(
-                          builder: (_) {
-                            print("Observer do total dialog");
-                            return Text(
-                                "${dialogController.total.toStringAsPrecision(2)}",
-                                textAlign: TextAlign.center);
-                          },
-                        ),
-                      ],
-                    ),
-                    actions: <Widget>[
-                      FlatButton(
-                        child: Text("Cancelar"),
-                        onPressed: () {
-                          produto.quantidade = dialogController.quantidadeCache;
-                          produto.preco = dialogController.precoCache;
-                          Navigator.pop(context);
-                        },
-                      ),
-                      FlatButton(
-                        child: Text("Ok"),
-                        onPressed: () {
-                          if (!produto.comprado) {
-                            produto.comprado = true;
-                            controller.update(produto);
-                            controller.incrementTotal(produto.getTotal());
-                          } else {
-                            produto.quantidade =
-                                dialogController.quantidadeCache;
-                            produto.preco = dialogController.precoCache;
-                          }
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  );
-                });
+              barrierDismissible: false,
+              context: context,
+              builder: (_) {
+                print("Rebuildando Dialog");
+                return CustomDialog(produto: produto,controller: controller);
+              });
           },
           onLongPress: () {
             controller.remove(produto);

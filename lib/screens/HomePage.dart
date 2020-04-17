@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
                       controller.search(value);
                     },
                   )
-                : Text("Total: ${controller.total.toStringAsPrecision(2)}");
+                : Text("Total: ${controller.total.toStringAsPrecision(4)}");
           },
         ),
         actions: <Widget>[
