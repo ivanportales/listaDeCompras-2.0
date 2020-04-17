@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:listadecompras2_5/controllers/ProdutosController.dart';
 import 'package:listadecompras2_5/models/Produto.dart';
-import 'package:listadecompras2_5/widgets/CustomDialog.dart';
+
+import 'package:listadecompras2_5/widgets/TileDialog.dart';
 
 class ProdutoListTile extends StatelessWidget {
   Produto produto;
@@ -47,7 +48,7 @@ class ProdutoListTile extends StatelessWidget {
               context: context,
               builder: (_) {
                 print("Rebuildando Dialog");
-                return CustomDialog(produto: produto,controller: controller);
+                return TileDialog(produto: produto,controller: controller);
               });
           },
           onLongPress: () {

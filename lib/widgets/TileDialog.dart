@@ -5,13 +5,13 @@ import '../controllers/ProdutoDialogController.dart';
 import '../controllers/ProdutosController.dart';
 import '../models/Produto.dart';
 
-class CustomDialog extends StatelessWidget {
+class TileDialog extends StatelessWidget {
 
   ProdutoDialogController dialogController = ProdutoDialogController();
   Produto produto;
   ProdutosController controller;
 
-  CustomDialog({this.produto, this.controller});
+  TileDialog({this.produto, this.controller});
 
   @override
   Widget build(BuildContext context) {

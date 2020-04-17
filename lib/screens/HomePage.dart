@@ -1,8 +1,8 @@
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:listadecompras2_5/controllers/AppBarController.dart';
 import 'package:listadecompras2_5/controllers/ProdutosController.dart';
-import 'package:listadecompras2_5/screens/AddPage.dart';
 import 'package:flutter/material.dart';
+import 'package:listadecompras2_5/widgets/AddDialog.dart';
 import 'package:listadecompras2_5/widgets/ProdutoListTile.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
             print("Rebuildando o Observer do title");
             return appBarController.isSearching
                 ? TextField(
-                    controller: appBarController.textController,
+                    controller: TextEditingController(),
                     onChanged: (value) {
                       controller.search(value);
                     },
@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
                     icon: Icon(Icons.close),
                     onPressed: () {
                       controller.resetList();
-                      appBarController.textController.text = '';
                       appBarController.isSearching =
                           !appBarController.isSearching;
                     },
@@ -77,12 +76,12 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add_shopping_cart),
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AddPage(
-                        controller: controller,
-                      )));
+          showDialog(
+            context: context,
+            builder: (_){
+              return AddDialog(controller: controller,);
+            }
+          );
         },
       ),
     );
