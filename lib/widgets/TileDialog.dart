@@ -17,6 +17,7 @@ class TileDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     print("rebuoldando customdialog");
 
+    dialogController.total = produto.getTotal();
     dialogController.quantidadeCache  = produto.quantidade;
     dialogController.precoCache = produto.preco;
     
