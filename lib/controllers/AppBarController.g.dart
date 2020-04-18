@@ -38,4 +38,10 @@ mixin _$AppBarController on _AppBarController, Store {
       _$_AppBarControllerActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string = 'isSearching: ${isSearching.toString()}';
+    return '{$string}';
+  }
 }

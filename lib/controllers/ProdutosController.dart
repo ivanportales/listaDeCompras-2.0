@@ -13,7 +13,8 @@ abstract class _ProdutosController with Store {
   @observable
   double total = 0.0;
 
-  List<Produto> _produtos = List<Produto>();
+  @observable
+  String  nQuery = "";
 
   DataBase dataBase;
 
@@ -26,7 +27,6 @@ abstract class _ProdutosController with Store {
     var tempList = await dataBase.getAll();
     total = _initTotal(tempList);
     produtos.addAll(tempList);
-    _produtos.addAll(tempList);
   }
 
   _initTotal(List<Produto> tempList) {
@@ -39,18 +39,21 @@ abstract class _ProdutosController with Store {
     return aux;
   }
 
+  @computed
+  get list {
+    return (nQuery.isEmpty) ? produtos : produtos.where((item) => item.nome.toLowerCase().contains(nQuery.toLowerCase())).toList();
+  }
+
   @action
   add(Produto produto) async {
     await dataBase.add(produto);
     produtos.add(produto);
-    _produtos.add(produto);
   }
 
   @action
   remove(Produto produto) async {
     await dataBase.remove(produto);
     produtos.remove(produto);
-    _produtos.remove(produto);
   }
 
   update(Produto produto) async {
@@ -62,19 +65,8 @@ abstract class _ProdutosController with Store {
   @action
   search(String query) {
     produtos.clear();
-    List<Produto> aux = List<Produto>();
-    _produtos.forEach((item) {
-      if (item.nome.toLowerCase().contains(query.toLowerCase())) {
-        aux.add(item);
-      }
-    });
+    List<Produto>  aux = produtos.where((item) => item.nome.toLowerCase().contains(query.toLowerCase())).toList();
     produtos.addAll(aux);
-  }
-
-  @action
-  resetList() {
-    produtos.clear();
-    produtos.addAll(_produtos);
   }
 
   @action
@@ -82,7 +74,6 @@ abstract class _ProdutosController with Store {
     await dataBase.clearAll();
     total = 0;
     produtos.clear();
-    _produtos.clear();
   }
 
   @action
@@ -97,3 +88,5 @@ abstract class _ProdutosController with Store {
 }
 
 // flutter pub run build_runner build
+// flutter pub run build_runner clean
+// flutter packages pub run build_runner build --delete-conflicting-outputs

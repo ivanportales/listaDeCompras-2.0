@@ -39,4 +39,10 @@ mixin _$ProdutoDialogController on _ProdutoDialogController, Store {
       _$_ProdutoDialogControllerActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string = 'total: ${total.toString()}';
+    return '{$string}';
+  }
 }

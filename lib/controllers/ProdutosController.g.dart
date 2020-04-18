@@ -9,6 +9,12 @@ part of 'ProdutosController.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ProdutosController on _ProdutosController, Store {
+  Computed<dynamic> _$listComputed;
+
+  @override
+  dynamic get list =>
+      (_$listComputed ??= Computed<dynamic>(() => super.list)).value;
+
   final _$produtosAtom = Atom(name: '_ProdutosController.produtos');
 
   @override
@@ -41,6 +47,23 @@ mixin _$ProdutosController on _ProdutosController, Store {
       super.total = value;
       _$totalAtom.reportChanged();
     }, _$totalAtom, name: '${_$totalAtom.name}_set');
+  }
+
+  final _$nQueryAtom = Atom(name: '_ProdutosController.nQuery');
+
+  @override
+  String get nQuery {
+    _$nQueryAtom.context.enforceReadPolicy(_$nQueryAtom);
+    _$nQueryAtom.reportObserved();
+    return super.nQuery;
+  }
+
+  @override
+  set nQuery(String value) {
+    _$nQueryAtom.context.conditionallyRunInAction(() {
+      super.nQuery = value;
+      _$nQueryAtom.reportChanged();
+    }, _$nQueryAtom, name: '${_$nQueryAtom.name}_set');
   }
 
   final _$addAsyncAction = AsyncAction('add');
@@ -78,16 +101,6 @@ mixin _$ProdutosController on _ProdutosController, Store {
   }
 
   @override
-  dynamic resetList() {
-    final _$actionInfo = _$_ProdutosControllerActionController.startAction();
-    try {
-      return super.resetList();
-    } finally {
-      _$_ProdutosControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic incrementTotal(double val) {
     final _$actionInfo = _$_ProdutosControllerActionController.startAction();
     try {
@@ -105,5 +118,12 @@ mixin _$ProdutosController on _ProdutosController, Store {
     } finally {
       _$_ProdutosControllerActionController.endAction(_$actionInfo);
     }
+  }
+
+  @override
+  String toString() {
+    final string =
+        'produtos: ${produtos.toString()},total: ${total.toString()},nQuery: ${nQuery.toString()},list: ${list.toString()}';
+    return '{$string}';
   }
 }

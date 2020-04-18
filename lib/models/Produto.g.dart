@@ -25,4 +25,10 @@ mixin _$Produto on _Produto, Store {
       _$compradoAtom.reportChanged();
     }, _$compradoAtom, name: '${_$compradoAtom.name}_set');
   }
+
+  @override
+  String toString() {
+    final string = 'comprado: ${comprado.toString()}';
+    return '{$string}';
+  }
 }

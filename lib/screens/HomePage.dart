@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
                 ? TextField(
                     controller: TextEditingController(),
                     onChanged: (value) {
-                      controller.search(value);
+                      controller.nQuery = value;
                     },
                   )
                 : Text("Total: ${controller.total.toStringAsPrecision(4)}");
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
                 ? IconButton(
                     icon: Icon(Icons.close),
                     onPressed: () {
-                      controller.resetList();
+                      controller.nQuery = "";
                       appBarController.isSearching =
                           !appBarController.isSearching;
                     },
@@ -63,11 +63,12 @@ class _HomePageState extends State<HomePage> {
       body: Observer(
         builder: (context) {
           print("Rebuildando o Observer da Lista");
+          var list = controller.list;
           return ListView.builder(
               padding: EdgeInsets.all(5),
-              itemCount: controller.produtos.length,
+              itemCount: list.length,
               itemBuilder: (context, index) => ProdutoListTile(
-                    produto: controller.produtos[index],
+                    produto: list[index],
                     index: index,
                     controller: controller,
                   ));
