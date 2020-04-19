@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 import '../controllers/ProdutoDialogController.dart';
 import '../controllers/ProdutosController.dart';
@@ -11,12 +12,13 @@ class TileDialog extends StatelessWidget {
   Produto produto;
   ProdutosController controller;
 
-  TileDialog({this.produto, this.controller});
+  TileDialog({this.produto});
 
   @override
   Widget build(BuildContext context) {
     print("rebuoldando customdialog");
 
+    this.controller = Provider.of<ProdutosController>(context);
     dialogController.total = produto.getTotal();
     dialogController.quantidadeCache  = produto.quantidade;
     dialogController.precoCache = produto.preco;

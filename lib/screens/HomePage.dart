@@ -3,7 +3,9 @@ import 'package:listadecompras2_5/controllers/AppBarController.dart';
 import 'package:listadecompras2_5/controllers/ProdutosController.dart';
 import 'package:flutter/material.dart';
 import 'package:listadecompras2_5/widgets/AddDialog.dart';
+import 'package:listadecompras2_5/widgets/ConfirmDialog.dart';
 import 'package:listadecompras2_5/widgets/ProdutoListTile.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,12 +13,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  ProdutosController controller = ProdutosController();
+  ProdutosController controller;
   AppBarController appBarController = AppBarController();
 
   @override
   Widget build(BuildContext context) {
     print("Rebuildando o HomePage");
+    this.controller = Provider.of<ProdutosController>(context);
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.assignment),
@@ -55,7 +58,10 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: Icon(Icons.delete),
             onPressed: () {
-              controller.clearAll();
+              showDialog(
+                context: context,
+                child: ConfirmDialog()
+              );
             },
           ),
         ],
@@ -70,7 +76,6 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index) => ProdutoListTile(
                     produto: list[index],
                     index: index,
-                    controller: controller,
                   ));
         },
       ),
@@ -79,8 +84,8 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (_){
-              return AddDialog(controller: controller,);
+            builder: (_) {
+              return AddDialog();
             }
           );
         },

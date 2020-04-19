@@ -63,16 +63,9 @@ abstract class _ProdutosController with Store {
   }
 
   @action
-  search(String query) {
-    produtos.clear();
-    List<Produto>  aux = produtos.where((item) => item.nome.toLowerCase().contains(query.toLowerCase())).toList();
-    produtos.addAll(aux);
-  }
-
-  @action
   clearAll() async {
     await dataBase.clearAll();
-    total = 0;
+    total = 0.0;
     produtos.clear();
   }
 

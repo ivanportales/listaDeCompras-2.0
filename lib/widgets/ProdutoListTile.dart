@@ -4,6 +4,7 @@ import 'package:listadecompras2_5/controllers/ProdutosController.dart';
 import 'package:listadecompras2_5/models/Produto.dart';
 
 import 'package:listadecompras2_5/widgets/TileDialog.dart';
+import 'package:provider/provider.dart';
 
 class ProdutoListTile extends StatelessWidget {
   Produto produto;
@@ -12,11 +13,11 @@ class ProdutoListTile extends StatelessWidget {
 
   ProdutoListTile(
       {@required this.produto,
-      @required this.index,
-      @required this.controller});
+      @required this.index});
 
   @override
   Widget build(BuildContext context) {
+    this.controller = Provider.of<ProdutosController>(context);
     return Observer(builder: (_) {
       return Card(
         color: Colors.transparent,
@@ -48,7 +49,7 @@ class ProdutoListTile extends StatelessWidget {
               context: context,
               builder: (_) {
                 print("Rebuildando Dialog");
-                return TileDialog(produto: produto,controller: controller);
+                return TileDialog(produto: produto);
               });
           },
           onLongPress: () {

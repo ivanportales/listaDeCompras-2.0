@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../controllers/ProdutosController.dart';
 import '../models/Produto.dart';
@@ -10,10 +11,9 @@ class AddDialog extends StatelessWidget {
 
   ProdutosController controller;
 
-  AddDialog({this.controller});
-
   @override
   Widget build(BuildContext context) {
+    this.controller = Provider.of<ProdutosController>(context);
     return AlertDialog(
       title: Text("Add Produto"),
       content: Column(

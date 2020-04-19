@@ -91,16 +91,6 @@ mixin _$ProdutosController on _ProdutosController, Store {
       ActionController(name: '_ProdutosController');
 
   @override
-  dynamic search(String query) {
-    final _$actionInfo = _$_ProdutosControllerActionController.startAction();
-    try {
-      return super.search(query);
-    } finally {
-      _$_ProdutosControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic incrementTotal(double val) {
     final _$actionInfo = _$_ProdutosControllerActionController.startAction();
     try {
