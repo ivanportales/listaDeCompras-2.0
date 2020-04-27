@@ -16,12 +16,8 @@ class _HomePageState extends State<HomePage> {
   ProdutosController controller;
   AppBarController appBarController = AppBarController();
 
-  @override
-  Widget build(BuildContext context) {
-    print("Rebuildando o HomePage");
-    this.controller = Provider.of<ProdutosController>(context);
-    return Scaffold(
-      appBar: AppBar(
+  Widget appBar() {
+    return SliverAppBar(
         leading: Icon(Icons.assignment),
         title: Observer(
           builder: (_) {
@@ -65,19 +61,35 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         ],
-      ),
-      body: Observer(
-        builder: (context) {
-          print("Rebuildando o Observer da Lista");
-          var list = controller.list;
-          return ListView.builder(
-              padding: EdgeInsets.all(5),
-              itemCount: list.length,
-              itemBuilder: (context, index) => ProdutoListTile(
-                    produto: list[index],
-                    index: index,
-                  ));
-        },
+      );  
+    }
+
+    Widget listView() {
+      print("Rebuildando o Observer da Lista");
+      List list = controller.list;
+      return SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context,index) => ProdutoListTile(produto: list[index], index: index),
+          childCount: list.length
+        ),
+      );
+    }
+
+  @override
+  Widget build(BuildContext context) {
+    print("Rebuildando o HomePage");
+    this.controller = Provider.of<ProdutosController>(context);
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: <Widget>[
+          appBar(),
+          Observer(
+            builder : (context){
+              return listView();
+            }
+          )
+          
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add_shopping_cart),

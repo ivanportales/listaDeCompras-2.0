@@ -41,6 +41,7 @@ abstract class _ProdutosController with Store {
 
   @computed
   get list {
+    print("get do list");
     return (nQuery.isEmpty) ? produtos : produtos.where((item) => item.nome.toLowerCase().contains(nQuery.toLowerCase())).toList();
   }
 
