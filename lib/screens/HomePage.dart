@@ -24,17 +24,19 @@ class _HomePageState extends State<HomePage> {
         height: 55,
         width: MediaQuery.of(context).size.width * 0.97,
         child: TextField(
+          cursorColor: Theme.of(context).cursorColor,
           textCapitalization: TextCapitalization.words,
           controller: TextEditingController(),
           onChanged: (value) {
             controller.nQuery = value;
           },
           decoration: InputDecoration(
-            labelText: "Ex: Macarrão",
+          
+            filled: true,
+            fillColor: Colors.white10,
+            hintText: "Ex: Macarrão",
             suffixIcon: Padding(padding: EdgeInsets.only(right: 15),child:Icon(Icons.search)),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
+            border: InputBorder.none
           ),
         ),
       )
@@ -45,6 +47,8 @@ class _HomePageState extends State<HomePage> {
     return SliverAppBar(
       centerTitle: true,
       floating: true,
+      pinned: true,
+      elevation: 20,
       leading: Icon(Icons.assignment),
       title: Observer(
         builder: (_) {

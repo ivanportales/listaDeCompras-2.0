@@ -21,7 +21,7 @@ class ProdutoListTile extends StatelessWidget {
     return Observer(builder: (_) {
       return Card(
         color: Colors.transparent,
-        margin: EdgeInsets.all(5),
+        margin: EdgeInsets.only(right: 8, left: 8, top: 7),
         child: ListTile(
           leading: Checkbox(
             checkColor: Colors.redAccent,
