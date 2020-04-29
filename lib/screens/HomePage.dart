@@ -18,23 +18,22 @@ class _HomePageState extends State<HomePage> {
 
   Widget searchBar(BuildContext context) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 0.065),
+      preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 0.062),
       child: Container(
         padding: EdgeInsets.only(left: 2,right: 2,bottom: 12),
         height: 55,
-        width: MediaQuery.of(context).size.width * 0.97,
+        width: MediaQuery.of(context).size.width * 0.95,
         child: TextField(
           cursorColor: Theme.of(context).cursorColor,
           textCapitalization: TextCapitalization.words,
           controller: TextEditingController(),
+        
           onChanged: (value) {
             controller.nQuery = value;
           },
           decoration: InputDecoration(
-          
             filled: true,
             fillColor: Colors.white10,
-            hintText: "Ex: Macarrão",
             suffixIcon: Padding(padding: EdgeInsets.only(right: 15),child:Icon(Icons.search)),
             border: InputBorder.none
           ),
