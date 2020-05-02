@@ -18,67 +18,64 @@ class _HomePageState extends State<HomePage> {
 
   Widget searchBar(BuildContext context) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 0.062),
-      child: Container(
-        padding: EdgeInsets.only(left: 2,right: 2,bottom: 12),
-        height: 55,
-        width: MediaQuery.of(context).size.width * 0.95,
-        child: TextField(
-          cursorColor: Theme.of(context).cursorColor,
-          textCapitalization: TextCapitalization.words,
-          controller: TextEditingController(),
-        
-          onChanged: (value) {
-            controller.nQuery = value;
-          },
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white10,
-            suffixIcon: Padding(padding: EdgeInsets.only(right: 15),child:Icon(Icons.search)),
-            border: InputBorder.none
+        preferredSize:
+            Size.fromHeight(MediaQuery.of(context).size.height * 0.09),
+        child: Container(
+          padding: EdgeInsets.only(left: 2, right: 2, bottom: 12),
+          height: MediaQuery.of(context).size.height * 0.09,
+          width: MediaQuery.of(context).size.width * 0.95,
+          child: TextField(
+            cursorColor: Theme.of(context).cursorColor,
+            textCapitalization: TextCapitalization.words,
+            controller: TextEditingController(),
+            onChanged: (value) {
+              controller.nQuery = value;
+            },
+            decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white10,
+                suffixIcon: Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: Icon(Icons.search)),
+                border: InputBorder.none),
           ),
-        ),
-      )
-    );
+        ));
   }
 
   Widget appBar(BuildContext context) {
     return SliverAppBar(
-      centerTitle: true,
-      floating: true,
-      pinned: true,
-      elevation: 20,
-      leading: Icon(Icons.assignment),
-      title: Observer(
-        builder: (_) {
-          print("Rebuildando o Observer do title");
-          return Text("Total: ${controller.total.toStringAsPrecision(4)}");
-        },
-      ),
-      bottom: searchBar(context),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.delete),
-          onPressed: () {
-            showDialog(
-              context: context,
-              child: ConfirmDialog()
-            );
+        centerTitle: true,
+        floating: true,
+        pinned: true,
+        elevation: 20,
+        leading: Icon(Icons.assignment),
+        title: Observer(
+          builder: (_) {
+            print("Rebuildando o Observer do title");
+            return Text("Total: ${controller.total.toStringAsPrecision(4)}");
           },
         ),
-      ]);  
-    }
+        bottom: searchBar(context),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              showDialog(context: context, child: ConfirmDialog());
+            },
+          ),
+        ]);
+  }
 
-    Widget listView() {
-      print("Rebuildando o Observer da Lista");
-      List list = controller.list;
-      return SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context,index) => ProdutoListTile(produto: list[index], index: index),
-          childCount: list.length
-        ),
-      );
-    }
+  Widget listView() {
+    print("Rebuildando o Observer da Lista");
+    List list = controller.list;
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+          (context, index) =>
+              ProdutoListTile(produto: list[index], index: index),
+          childCount: list.length),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,22 +85,19 @@ class _HomePageState extends State<HomePage> {
       body: CustomScrollView(
         slivers: <Widget>[
           appBar(context),
-          Observer(
-            builder : (context){
-              return listView();
-            }
-          )
+          Observer(builder: (context) {
+            return listView();
+          })
         ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add_shopping_cart),
         onPressed: () {
           showDialog(
-            context: context,
-            builder: (_) {
-              return AddDialog();
-            }
-          );
+              context: context,
+              builder: (_) {
+                return AddDialog();
+              });
         },
       ),
     );
