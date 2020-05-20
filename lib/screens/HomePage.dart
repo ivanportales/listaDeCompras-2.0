@@ -17,28 +17,25 @@ class _HomePageState extends State<HomePage> {
   AppBarController appBarController = AppBarController();
 
   Widget searchBar(BuildContext context) {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 0.062),
-      child: Container(
-        padding: EdgeInsets.only(left: 2,right: 2,bottom: 12),
-        height: 55,
-        width: MediaQuery.of(context).size.width * 0.95,
-        child: TextField(
-          cursorColor: Theme.of(context).cursorColor,
-          textCapitalization: TextCapitalization.words,
-          controller: TextEditingController(),
-        
-          onChanged: (value) {
-            controller.nQuery = value;
-          },
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white10,
-            suffixIcon: Padding(padding: EdgeInsets.only(right: 15),child:Icon(Icons.search)),
-            border: InputBorder.none
+    return Card(
+      margin: EdgeInsets.only(top: 120, left: 13,right: 13),
+      child: TextField(
+        cursorColor: Theme.of(context).cursorColor,
+        textCapitalization: TextCapitalization.words,
+        controller: TextEditingController(),
+        onChanged: (value) {
+          controller.nQuery = value;
+        },
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white10,
+          prefixIcon: Icon(
+            Icons.search,
+            size: 16,
           ),
+          border: InputBorder.none
         ),
-      )
+      ),
     );
   }
 
@@ -48,6 +45,7 @@ class _HomePageState extends State<HomePage> {
       floating: true,
       pinned: true,
       elevation: 20,
+      expandedHeight: MediaQuery.of(context).size.height * 0.13,
       leading: Icon(Icons.assignment),
       title: Observer(
         builder: (_) {
@@ -55,10 +53,12 @@ class _HomePageState extends State<HomePage> {
           return Text("Total: ${controller.total.toStringAsPrecision(4)}");
         },
       ),
-      bottom: searchBar(context),
+      flexibleSpace: FlexibleSpaceBar(
+        title: searchBar(context),
+      ),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.delete),
+          icon: Icon(Icons.delete_forever),
           onPressed: () {
             showDialog(
               context: context,
@@ -71,11 +71,10 @@ class _HomePageState extends State<HomePage> {
 
     Widget listView() {
       print("Rebuildando o Observer da Lista");
-      List list = controller.list;
       return SliverList(
         delegate: SliverChildBuilderDelegate(
-          (context,index) => ProdutoListTile(produto: list[index], index: index),
-          childCount: list.length
+          (context,index) => ProdutoListTile(produto: controller.list[index], index: index),
+          childCount: controller.list.length
         ),
       );
     }
@@ -89,7 +88,7 @@ class _HomePageState extends State<HomePage> {
         slivers: <Widget>[
           appBar(context),
           Observer(
-            builder : (context){
+            builder : (context) {
               return listView();
             }
           )
