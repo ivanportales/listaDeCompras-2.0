@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget searchBar(BuildContext context) {
     return Card(
+      
       margin: EdgeInsets.only(top: 120, left: 13,right: 13),
       child: TextField(
         cursorColor: Theme.of(context).cursorColor,
